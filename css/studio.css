@@ -785,22 +785,28 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
   font-size:var(--step--2); letter-spacing:.22em; text-transform:uppercase;
   color:rgba(243,241,236,.62); margin:0;
 }
+/* h1 — невидимая обёртка на ширину viewport. Бренд прижат к --pad слева/справа
+   (тот же отступ, что у .hero__top и .hero__mono — единая «сетка»),
+   плашка строго по центру. Меняется только letter-spacing бренда. */
 .hero__h1{
   position:absolute; left:0; right:0; bottom:clamp(30px,5.5vh,80px); z-index:2;
-  display:flex; justify-content:center; align-items:center;
-  gap:clamp(.1rem, .35vw, .55rem);
-  padding:0 clamp(14px, 2vw, 32px); margin:0; pointer-events:none;
+  margin:0; padding:0; pointer-events:none; height:0;
 }
-.hero__h1 > *{ pointer-events:auto; }
 .hero__brand{
+  position:absolute; bottom:0;
   font-family:var(--f-display); font-weight:900;
   font-size:clamp(2.8rem, 1.2rem + 7.5vw, 10.5rem);
   line-height:.84; letter-spacing:-.045em;
   color:var(--hero-accent); text-transform:none;
-  flex:0 1 auto; white-space:nowrap;
+  white-space:nowrap; pointer-events:auto;
   will-change:letter-spacing;
 }
-.hero__brand--r{ text-align:right; }
+.hero__brand--l{ left:var(--pad); }
+.hero__brand--r{ right:var(--pad); text-align:right; }
+.hero__reel{
+  position:absolute; left:50%; bottom:0; transform:translateX(-50%); z-index:3;
+  pointer-events:auto;
+}
 
 .hero__reel{
   background:rgba(20,12,14,.55);
@@ -813,7 +819,7 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 }
 .hero__reel:hover{
   background:rgba(20,12,14,.78); border-color:rgba(243,241,236,.34);
-  transform:translateY(-2px);
+  transform:translateX(-50%) translateY(-2px);
 }
 .hero__reel-tag{
   font-family:var(--f-mono); font-weight:500;
@@ -825,15 +831,24 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
   font-size:var(--step--1); color:#f3f1ec;
 }
 
-/* mobile: компактим, бренд + плашка стекаются по центру */
+/* mobile: бренд + плашка стекаются по центру (отказываемся от абсолютного позиционирования) */
 @media (max-width:760px){
   .hero__top{ font-size:.8rem; max-width:18ch; top:clamp(80px,11vh,110px); }
   .hero__mono{ display:none; }
-  .hero__h1{ flex-direction:column; align-items:center; gap:.5em;
-    bottom:clamp(40px,6vh,70px); padding:0 var(--pad); text-align:center; }
-  .hero__brand{ font-size:clamp(2.8rem, 16vw, 5.2rem); }
-  .hero__brand--r{ text-align:center; }
-  .hero__reel{ min-width:0; padding:.7em 1em; }
+  .hero__h1{
+    height:auto;
+    display:flex; flex-direction:column; align-items:center; gap:.5em;
+    bottom:clamp(40px,6vh,70px); padding:0 var(--pad); text-align:center;
+  }
+  .hero__brand{
+    position:static; left:auto; right:auto; bottom:auto;
+    font-size:clamp(2.8rem, 16vw, 5.2rem); text-align:center;
+  }
+  .hero__reel{
+    position:static; left:auto; bottom:auto; transform:none;
+    min-width:0; padding:.7em 1em;
+  }
+  .hero__reel:hover{ transform:none; }
   .hero__reel-text{ font-size:.78rem; }
   .hero__reel-tag{ font-size:.55rem; }
 }
