@@ -179,25 +179,19 @@
     if (!bl || !br) return;
     const BASE_LS = -0.045; // em — базовый letter-spacing (как в CSS)
     const K_LS = 0.09;      // ±em амплитуда
-    const GAPS_L = 5;        // в «Сергей» 6 букв → 5 промежутков
-    const GAPS_R = 6;        // в «Ведущий» 7 букв → 6 промежутков
     let target = 0, current = 0, rafId = 0;
     function apply(off) {
       // курсор LEFT (off=-1) → bl плотнее (BASE-K), br шире (BASE+K)
       bl.style.letterSpacing = (BASE_LS + off * K_LS).toFixed(4) + "em";
       br.style.letterSpacing = (BASE_LS - off * K_LS).toFixed(4) + "em";
-      // считаем сдвиг плашки на основе изменения ширин:
-      // ΔbrL = (+off*K_LS em) * GAPS_L * fontSize → Сергей становится уже/шире (px)
-      // ΔbrR = (-off*K_LS em) * GAPS_R * fontSize → Ведущий наоборот
-      // правый край Сергея сдвигается на ΔbrL, левый край Ведущий на -ΔbrR
-      // центр между ними смещается на (ΔbrL - ΔbrR) / 2
+      // Плашка должна быть точно по середине между правым краем Сергея и левым краем Ведущего.
+      // Сергей закреплён за left:var(--pad), Ведущий за right:var(--pad), они симметричны
+      // относительно viewport center. Сдвиг = (bl_width - br_width)/2:
+      //   если bl шире → плашка вправо;
+      //   если br шире → плашка влево.
+      // offsetWidth учитывает уже применённый letter-spacing.
       if (reel) {
-        const font = parseFloat(getComputedStyle(bl).fontSize) || 0;
-        const dL = off * K_LS * GAPS_L * font;    // знак: + при off+ (Сергей растёт → правый край вправо)
-        const dR = -off * K_LS * GAPS_R * font;   // знак: + при off- (Ведущий растёт → левый край влево, в -)
-        // фактически левый край Ведущий смещается на -dR относительно его правого края (фиксированного у --pad)
-        // центр между Сергея.right и Ведущий.left смещается на (dL + (-dR))/2 = (dL - dR)/2
-        const shift = (dL - dR) / 2;
+        const shift = (bl.offsetWidth - br.offsetWidth) / 2;
         reel.style.setProperty("--reel-shift", shift.toFixed(2) + "px");
       }
     }
