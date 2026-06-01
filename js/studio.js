@@ -165,26 +165,41 @@
   }
 
   /* ---- hero interaction: курсор «ужимает» бренд через letter-spacing ----
-     Буквы сохраняют ВЫСОТУ (font-size не трогаем), меняется плотность между буквами:
-     отрицательный letter-spacing = буквы ближе друг к другу = текст сжимается;
-     положительный = буквы расходятся = текст растягивается.
-     Изменение letter-spacing меняет реальную layout-ширину → плашка естественно
-     сдвигается между Сергеем и Ведущим через flex-перерасчёт. */
+     Буквы сохраняют ВЫСОТУ (font-size не трогаем), меняется плотность между буквами.
+     Бренд прибит к --pad (по сетке), плашка двигается отдельно через CSS-переменную
+     --reel-shift: считаем сколько px бренд «забрал» с каждой стороны и сдвигаем
+     плашку на половину этой разницы, чтобы она оставалась между внутренними краями. */
   function heroInteract() {
     if (reduce) return;
     const hero = document.querySelector(".hero");
     if (!hero) return;
     const bl = hero.querySelector(".hero__brand--l");
     const br = hero.querySelector(".hero__brand--r");
+    const reel = hero.querySelector(".hero__reel");
     if (!bl || !br) return;
     const BASE_LS = -0.045; // em — базовый letter-spacing (как в CSS)
     const K_LS = 0.09;      // ±em амплитуда
+    const GAPS_L = 5;        // в «Сергей» 6 букв → 5 промежутков
+    const GAPS_R = 6;        // в «Ведущий» 7 букв → 6 промежутков
     let target = 0, current = 0, rafId = 0;
     function apply(off) {
       // курсор LEFT (off=-1) → bl плотнее (BASE-K), br шире (BASE+K)
-      // курсор RIGHT (off=+1) → наоборот
       bl.style.letterSpacing = (BASE_LS + off * K_LS).toFixed(4) + "em";
       br.style.letterSpacing = (BASE_LS - off * K_LS).toFixed(4) + "em";
+      // считаем сдвиг плашки на основе изменения ширин:
+      // ΔbrL = (+off*K_LS em) * GAPS_L * fontSize → Сергей становится уже/шире (px)
+      // ΔbrR = (-off*K_LS em) * GAPS_R * fontSize → Ведущий наоборот
+      // правый край Сергея сдвигается на ΔbrL, левый край Ведущий на -ΔbrR
+      // центр между ними смещается на (ΔbrL - ΔbrR) / 2
+      if (reel) {
+        const font = parseFloat(getComputedStyle(bl).fontSize) || 0;
+        const dL = off * K_LS * GAPS_L * font;    // знак: + при off+ (Сергей растёт → правый край вправо)
+        const dR = -off * K_LS * GAPS_R * font;   // знак: + при off- (Ведущий растёт → левый край влево, в -)
+        // фактически левый край Ведущий смещается на -dR относительно его правого края (фиксированного у --pad)
+        // центр между Сергея.right и Ведущий.left смещается на (dL + (-dR))/2 = (dL - dR)/2
+        const shift = (dL - dR) / 2;
+        reel.style.setProperty("--reel-shift", shift.toFixed(2) + "px");
+      }
     }
     function tick() {
       const d = target - current;
@@ -204,6 +219,7 @@
     addEventListener("resize", () => {
       current = target = 0;
       bl.style.letterSpacing = ""; br.style.letterSpacing = "";
+      if (reel) reel.style.removeProperty("--reel-shift");
     }, { passive: true });
   }
 

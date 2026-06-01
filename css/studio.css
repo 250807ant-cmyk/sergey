@@ -804,7 +804,9 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 .hero__brand--l{ left:var(--pad); }
 .hero__brand--r{ right:var(--pad); text-align:right; }
 .hero__reel{
-  position:absolute; left:50%; bottom:0; transform:translateX(-50%); z-index:3;
+  position:absolute; left:50%; bottom:0; z-index:3;
+  /* --reel-shift меняется из JS, чтобы плашка следовала за сжатием бренда */
+  transform:translate(calc(-50% + var(--reel-shift, 0px)), 0);
   pointer-events:auto;
 }
 
@@ -819,7 +821,7 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 }
 .hero__reel:hover{
   background:rgba(20,12,14,.78); border-color:rgba(243,241,236,.34);
-  transform:translateX(-50%) translateY(-2px);
+  transform:translate(calc(-50% + var(--reel-shift, 0px)), -2px);
 }
 .hero__reel-tag{
   font-family:var(--f-mono); font-weight:500;
