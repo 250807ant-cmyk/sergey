@@ -164,9 +164,12 @@
     });
   }
 
-  /* ---- hero interaction: курсор «качает» бренд — Сергей жмётся, Ведущий растёт ----
-     Меняем напрямую font-size в inline-style — буквы реально меняют ширину, и flex
-     перерисовывает плашку между. Без CSS-transition на font-size (Chromium-баг). */
+  /* ---- hero interaction: курсор «ужимает» бренд через letter-spacing ----
+     Буквы сохраняют ВЫСОТУ (font-size не трогаем), меняется плотность между буквами:
+     отрицательный letter-spacing = буквы ближе друг к другу = текст сжимается;
+     положительный = буквы расходятся = текст растягивается.
+     Изменение letter-spacing меняет реальную layout-ширину → плашка естественно
+     сдвигается между Сергеем и Ведущим через flex-перерасчёт. */
   function heroInteract() {
     if (reduce) return;
     const hero = document.querySelector(".hero");
@@ -174,17 +177,14 @@
     const bl = hero.querySelector(".hero__brand--l");
     const br = hero.querySelector(".hero__brand--r");
     if (!bl || !br) return;
-    let baseFL = 0, baseFR = 0, target = 0, current = 0, rafId = 0;
-    const K = 0.3; // макс. сжатие/расширение: ±30% от базового font-size
-    function readBase() {
-      bl.style.fontSize = ""; br.style.fontSize = "";
-      baseFL = parseFloat(getComputedStyle(bl).fontSize) || 0;
-      baseFR = parseFloat(getComputedStyle(br).fontSize) || 0;
-    }
+    const BASE_LS = -0.045; // em — базовый letter-spacing (как в CSS)
+    const K_LS = 0.09;      // ±em амплитуда
+    let target = 0, current = 0, rafId = 0;
     function apply(off) {
-      if (!baseFL || !baseFR) readBase();
-      bl.style.fontSize = (baseFL * (1 + off * K)).toFixed(2) + "px";
-      br.style.fontSize = (baseFR * (1 - off * K)).toFixed(2) + "px";
+      // курсор LEFT (off=-1) → bl плотнее (BASE-K), br шире (BASE+K)
+      // курсор RIGHT (off=+1) → наоборот
+      bl.style.letterSpacing = (BASE_LS + off * K_LS).toFixed(4) + "em";
+      br.style.letterSpacing = (BASE_LS - off * K_LS).toFixed(4) + "em";
     }
     function tick() {
       const d = target - current;
@@ -194,7 +194,6 @@
       else { current = target; rafId = 0; }
     }
     function kick() { if (!rafId) rafId = requestAnimationFrame(tick); }
-    readBase();
     hero.addEventListener("mousemove", (e) => {
       const r = hero.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width;
@@ -203,8 +202,8 @@
     });
     hero.addEventListener("mouseleave", () => { target = 0; kick(); });
     addEventListener("resize", () => {
-      baseFL = baseFR = 0; current = target = 0;
-      bl.style.fontSize = ""; br.style.fontSize = "";
+      current = target = 0;
+      bl.style.letterSpacing = ""; br.style.letterSpacing = "";
     }, { passive: true });
   }
 

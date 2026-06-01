@@ -788,17 +788,17 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 .hero__h1{
   position:absolute; left:0; right:0; bottom:clamp(30px,5.5vh,80px); z-index:2;
   display:flex; justify-content:space-between; align-items:center;
-  gap:clamp(.4rem, 1.2vw, 1.4rem);
-  padding:0 clamp(20px, 3vw, 44px); margin:0; pointer-events:none;
+  gap:clamp(.25rem, .8vw, 1rem);
+  padding:0 clamp(14px, 2vw, 32px); margin:0; pointer-events:none;
 }
 .hero__h1 > *{ pointer-events:auto; }
 .hero__brand{
   font-family:var(--f-display); font-weight:900;
-  font-size:clamp(2.6rem, 1rem + 7vw, 10rem);
+  font-size:clamp(2.8rem, 1.2rem + 7.5vw, 10.5rem);
   line-height:.84; letter-spacing:-.045em;
   color:var(--hero-accent); text-transform:none;
   flex:0 1 auto; white-space:nowrap;
-  will-change:font-size;
+  will-change:letter-spacing;
 }
 .hero__brand--r{ text-align:right; }
 
@@ -806,7 +806,7 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
   background:rgba(20,12,14,.55);
   backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
   border:1px solid rgba(243,241,236,.16); border-radius:14px;
-  padding:.7em 1.1em; min-width:170px; max-width:230px;
+  padding:.65em 1em; min-width:160px; max-width:210px;
   display:flex; flex-direction:column; align-items:center; gap:.25em;
   text-align:center; cursor:pointer; color:#f3f1ec; flex:0 0 auto;
   transition:background .3s, border-color .3s, transform .3s var(--ease);
