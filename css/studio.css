@@ -788,7 +788,7 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 .hero__h1{
   position:absolute; left:0; right:0; bottom:clamp(30px,5.5vh,80px); z-index:2;
   display:flex; justify-content:center; align-items:center;
-  gap:clamp(.4rem, 1vw, 1.4rem);
+  gap:clamp(.1rem, .35vw, .55rem);
   padding:0 clamp(14px, 2vw, 32px); margin:0; pointer-events:none;
 }
 .hero__h1 > *{ pointer-events:auto; }
