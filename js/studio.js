@@ -281,7 +281,7 @@
       card.innerHTML =
         '<div class="req__success-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></div>' +
         '<h3 class="req__success-title">Заявка принята</h3>' +
-        '<p class="req__success-text">Спасибо, ' + esc(name) + '. Свяжусь с вами в течение дня — обсудим дату и формат события.</p>' +
+        '<p class="req__success-text">Спасибо! Перезвоню вам в течение дня — обсудим дату и формат события.</p>' +
         '<div class="req__success-direct">' +
           '<span>Срочно:</span>' +
           '<a href="' + TG_FALLBACK + '" target="_blank" rel="noopener">Telegram</a>' +
@@ -301,13 +301,10 @@
       // honeypot — если бот заполнил скрытое поле, тихо игнорим
       const honey = f.querySelector('[name="_honey"]');
       if (honey && honey.value) return;
-      // валидация: имя + НАСТОЯЩИЙ телефон (11 цифр)
-      if (!g("name")) {
-        if (note) { note.textContent = "Укажите, пожалуйста, имя."; note.classList.add("req__note--err"); }
-        return;
-      }
-      if (("" + g("contact")).replace(/\D/g, "").length !== 11) {
-        if (note) { note.textContent = "Введите корректный номер телефона: +7 (___) ___-__-__"; note.classList.add("req__note--err"); }
+      // валидация: НАСТОЯЩИЙ российский мобильный (+7 9XX XXX-XX-XX), 11 цифр, 2-я = 9
+      var pd = ("" + g("contact")).replace(/\D/g, "");
+      if (!(pd.length === 11 && pd.charAt(0) === "7" && pd.charAt(1) === "9")) {
+        if (note) { note.textContent = "Введите настоящий номер телефона: +7 (9__) ___-__-__"; note.classList.add("req__note--err"); }
         return;
       }
       // согласие на обработку ПД (152-ФЗ) — обязательно
@@ -320,13 +317,13 @@
       }
       if (consentLabel) consentLabel.classList.remove("req__consent--err");
       const payload = {
-        name: g("name"),
+        name: g("name") || "Заявка по телефону",
         contact: g("contact"),
         event: g("event") || "(не указано)",
         message: g("msg") || "(без сообщения)",
         consent: consent ? "Согласие на обработку ПД получено" : "(чекбокс не выводился)",
         page: location.pathname + " — " + document.title,
-        _subject: "Заявка с сайта — " + g("name"),
+        _subject: "Заявка с сайта — " + g("contact"),
         _template: "table",
         _captcha: "false"
       };
@@ -431,16 +428,21 @@
 
   /* ---- подмена фото сайта из админки (data-img-slot -> /api/images) ---- */
   function siteImages() {
-    var nodes = document.querySelectorAll("[data-img-slot]");
-    if (!nodes.length) return;
     fetch("/api/images", { headers: { Accept: "application/json" } })
       .then(function (r) { return r.ok ? r.json() : {}; })
       .then(function (map) {
         if (!map) return;
-        nodes.forEach(function (img) {
+        document.querySelectorAll("[data-img-slot]").forEach(function (img) {
           var key = img.getAttribute("data-img-slot");
           if (map[key]) img.src = map[key];
         });
+        // фавикон из админки (иконка вкладки)
+        if (map.favicon) {
+          var link = document.querySelector('link[rel~="icon"]');
+          if (!link) { link = document.createElement("link"); link.rel = "icon"; document.head.appendChild(link); }
+          link.removeAttribute("type");
+          link.href = map.favicon;
+        }
       })
       .catch(function () {});
   }

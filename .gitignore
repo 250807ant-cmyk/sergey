@@ -5,4 +5,4 @@ Thumbs.db
 node_modules/
 .vscode/
 .idea/
-site-deploy.zip
+site-deploy*.zip

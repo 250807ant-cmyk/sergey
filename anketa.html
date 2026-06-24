@@ -78,10 +78,10 @@
   var STEPS = [
     { title:"Событие", sub:"Пара базовых деталей — это займёт минут 5.", fields:[
       { type:"chips", key:"eventType", label:"Что за событие?", required:true, options:["Свадьба","Юбилей","День рождения","Корпоратив","Форум / конференция","Другое"] },
-      { type:"text", key:"date", label:"Дата", opt:true, ph:"15 августа 2026" },
+      { type:"date", key:"date", label:"Дата события", opt:true },
       { type:"text", key:"city", label:"Город", opt:true },
       { type:"text", key:"venue", label:"Площадка / место", opt:true, ph:"ресторан, лофт, зал…" },
-      { type:"text", key:"guests", label:"Сколько примерно гостей?", opt:true, ph:"40" }
+      { type:"chips", key:"guests", label:"Сколько примерно гостей?", opt:true, options:["до 20","20–50","50–100","100–200","200–500","500+"] }
     ]},
     { title:"Как с вами связаться", sub:"Чтобы Сергей мог обсудить детали.", fields:[
       { type:"text", key:"name", label:"Как вас зовут?", required:true },
@@ -132,6 +132,8 @@
     var lbl = f.label ? '<label class="bflbl">'+esc(f.label)+req+'</label>' : '';
     var v = A[f.key];
     if(f.type==="text") return '<div class="bffield">'+lbl+'<input class="bfi" data-k="'+f.key+'" type="text" value="'+esc(v||"")+'" placeholder="'+esc(f.ph||"")+'"></div>';
+    if(f.type==="date") return '<div class="bffield">'+lbl+'<input class="bfi" data-k="'+f.key+'" type="date" value="'+esc(v||"")+'"></div>';
+    if(f.type==="number") return '<div class="bffield">'+lbl+'<input class="bfi" data-k="'+f.key+'" type="number" inputmode="numeric" min="0" value="'+esc(v||"")+'" placeholder="'+esc(f.ph||"")+'"></div>';
     if(f.type==="textarea") return '<div class="bffield">'+lbl+'<textarea class="bft" data-k="'+f.key+'" placeholder="'+esc(f.ph||"")+'">'+esc(v||"")+'</textarea></div>';
     if(f.type==="chips"){
       var sel = f.multi ? (Array.isArray(v)?v:[]) : v;
