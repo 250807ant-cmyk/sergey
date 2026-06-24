@@ -1,0 +1,41 @@
+/* =====================================================================
+   Каркас GSAP-движка (общий для всех версий).
+   Характер анимаций теперь задаёт engine.js (объект P по версиям);
+   здесь — только FOUC-скрытие до старта, разбивка текста и служебное.
+   Прячем ТОЛЬКО под html.anim — без JS / при reduce-motion всё видно.
+   ===================================================================== */
+
+/* FOUC: анимируемые элементы скрыты до запуска движка (движок их покажет) */
+html.anim :is(
+  .statement__title, .feature__title, .h2, .detail__title, .detail__catitle, .detail__bh, .req__title, .legal__title,
+  .label, .hero__top, .hero__mono, .hero__reel, .req__eyebrow, .footer__eyebrow, .legal__eyebrow,
+  .detail__tag, .detail__catag, .story__idx, .detail__rownum, .detail__stepn, .detail__meta, .detail__cameta, .legal__meta,
+  .btn, .nav__cta, .req__submit, .req__chip, .detail__play, .alink, .req__anketa, .detail__plus, .case-name, .footer__big-link,
+  .hero__brand--l, .hero__brand--r, .statement__sub, .feature__row p, .story__title, .story__desc,
+  .req__text, .req__direct, .req__field, .req__consent, .detail__text p, .detail__rowh, .detail__rowp,
+  .detail__steph, .detail__stepp, .detail__caabout, .legal__index-card, .legal__doc h2, .legal__doc h3,
+  .legal__doc p, .legal__doc li, .footer__brand, .footer__social a, .footer__legal a, .footer__bottom span,
+  .feature > img, .detail__main, .detail__thumbs figure, .story__thumb
+) { opacity: 0; }
+
+/* разбивка текста на слова/буквы */
+html.anim .w { display: inline-block; vertical-align: top; }
+html.anim .w__i, html.anim .c { display: inline-block; will-change: transform, opacity, filter; }
+html.anim .mask-head .w { overflow: hidden; }
+html.anim .mask-head em .w { overflow: visible; }
+
+/* фото для 3D-наклона */
+html.anim .story, html.anim .case-name, html.anim .detail__main { transform-style: preserve-3d; }
+
+/* индикатор прогресса скролла */
+html.anim .sx-prog { position: fixed; inset: 0 0 auto 0; height: 3px; transform: scaleX(0); transform-origin: 0 50%;
+  background: var(--accent, #6e1b27); z-index: 9001; pointer-events: none; }
+
+/* живое фото-герой: бесконечный медленный ken-burns */
+html.anim .hero__media img { animation: amb-kb 26s ease-in-out infinite alternate; }
+html.anim .detail__hero .detail__img { animation: amb-kb 30s ease-in-out infinite alternate; }
+@keyframes amb-kb { from { transform: scale(1.05); } to { transform: scale(1.14); } }
+
+/* ВЕРСИЯ 1 — CINEMATIC · «Кинематограф»
+   Стиль анимаций задаёт engine.js (P.cinematic): слова из-под маски, фото
+   клип-вайпом, плавный «въезд» секций по скроллу + параллакс. Здесь — пусто. */

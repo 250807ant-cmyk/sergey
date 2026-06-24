@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light" data-anim="editorial">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Анкета события · Б.О.Г Сергей</title>
+<meta name="description" content="Короткая анкета-бриф: расскажите о вашем событии — Сергей подготовит программу под вас." />
+<meta name="robots" content="noindex, follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/studio.css?v=71" />
+<style>
+.bfwrap{max-width:680px;margin:0 auto;padding:clamp(16px,4vw,40px) var(--pad) 80px}
+.bftop{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad);position:sticky;top:0;background:var(--bg);z-index:10}
+.bftop a{font-family:var(--f-mono);font-size:var(--step--1);color:var(--paper-dim)}
+.bflogo{font-family:var(--f-display);font-weight:800;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:.5em}
+.bflogo i{width:.5em;height:.5em;border-radius:50%;background:var(--accent)}
+.bfprog{height:5px;background:var(--line);border-radius:999px;overflow:hidden;margin:6px var(--pad) 0}
+.bfprog span{display:block;height:100%;background:var(--accent);width:0;transition:width .35s var(--ease)}
+.bfhead{margin:clamp(20px,4vw,38px) 0 6px}
+.bfstepn{font-family:var(--f-mono);font-size:var(--step--2);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.bftitle{font-family:var(--f-display);font-weight:800;letter-spacing:-.025em;font-size:clamp(1.7rem,1.2rem+2vw,2.6rem);color:var(--paper);line-height:1.05;margin-top:6px}
+.bfsub{font-family:var(--f-mono);font-size:var(--step--1);color:var(--paper-dim);margin-top:10px}
+.bffield{margin-top:clamp(18px,2.5vw,26px)}
+.bflbl{display:block;font-family:var(--f-display);font-weight:600;font-size:var(--step-1);color:var(--paper);margin-bottom:10px}
+.bflbl .opt{font-family:var(--f-mono);font-weight:400;font-size:.7em;color:var(--paper-faint);letter-spacing:.04em;margin-left:.5em}
+.bflbl .bfreq{color:var(--accent)}
+.bfi,.bft{width:100%;font-family:var(--f-body);font-size:var(--step-0);color:var(--paper);background:var(--bg-1);border:1.5px solid var(--line);border-radius:12px;padding:13px 15px;transition:border-color .2s}
+.bft{resize:vertical;min-height:90px;line-height:1.6}
+.bfi:focus,.bft:focus{outline:none;border-color:var(--accent)}
+.bfchips{display:flex;flex-wrap:wrap;gap:9px}
+.bfchip{font-family:var(--f-mono);font-size:var(--step--1);padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg-1);color:var(--paper-dim);cursor:pointer;transition:.18s;user-select:none}
+.bfchip:hover{border-color:var(--line-2)}
+.bfchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.bfcards{display:flex;flex-direction:column;gap:10px}
+.bfcard{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bfcard .bfi{flex:1;min-width:120px}
+.bfcard .del{flex:0 0 auto;width:42px;height:46px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg-1);color:var(--paper-dim);cursor:pointer;font-size:18px}
+.bfcard .del:hover{border-color:var(--accent);color:var(--accent)}
+.bfadd{align-self:flex-start;font-family:var(--f-mono);font-size:var(--step--1);color:var(--accent);background:none;border:1.5px dashed var(--line-2);border-radius:10px;padding:9px 14px;cursor:pointer}
+.bfadd:hover{border-color:var(--accent)}
+.bfconsent{display:flex;align-items:flex-start;gap:.7em;font-family:var(--f-mono);font-size:var(--step--1);line-height:1.55;color:var(--paper-dim);cursor:pointer}
+.bfconsent input{width:1.2em;height:1.2em;margin-top:.15em;accent-color:var(--accent);flex:0 0 auto}
+.bfconsent a{color:var(--accent);border-bottom:1px solid currentColor}
+.bfnav{display:flex;gap:12px;justify-content:space-between;margin-top:clamp(26px,4vw,40px)}
+.bfbtn{font-family:var(--f-body);font-weight:700;font-size:var(--step-0);border-radius:999px;padding:14px 28px;cursor:pointer;border:1.5px solid var(--line-2);background:transparent;color:var(--paper);transition:.2s}
+.bfbtn:hover{border-color:var(--paper)}
+.bfbtn--main{background:var(--accent);border-color:var(--accent);color:#fff;margin-left:auto}
+.bfbtn--main:hover{filter:brightness(1.06)}
+.bfbtn:disabled{opacity:.5;cursor:default}
+.bferr{font-family:var(--f-mono);font-size:var(--step--1);color:var(--accent);margin-top:14px;min-height:1.2em}
+.bfsaved{font-family:var(--f-mono);font-size:var(--step--2);color:var(--paper-faint);text-align:center;margin-top:18px}
+.bfdone{text-align:center;padding:clamp(30px,8vw,70px) 0}
+.bfdone .mark{width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;margin:0 auto 20px}
+.bfdone .mark svg{width:32px;height:32px}
+.bfdone h2{font-family:var(--f-display);font-weight:800;font-size:clamp(1.8rem,1.2rem+2.4vw,3rem);color:var(--paper);letter-spacing:-.02em}
+.bfdone p{font-family:var(--f-mono);font-size:var(--step-0);color:var(--paper-dim);max-width:42ch;margin:14px auto 0;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="bftop">
+  <a href="index.html" class="bflogo"><i></i>Б.О.Г&nbsp;Сергей</a>
+  <a href="index.html">← на сайт</a>
+</div>
+<div class="bfprog"><span id="bfbar"></span></div>
+
+<main class="bfwrap" id="bfroot"></main>
+
+<script>
+(function(){
+  "use strict";
+  var META = ["name","contact","eventType","date","city","venue","guests"];
+
+  var STEPS = [
+    { title:"Событие", sub:"Пара базовых деталей — это займёт минут 5.", fields:[
+      { type:"chips", key:"eventType", label:"Что за событие?", required:true, options:["Свадьба","Юбилей","День рождения","Корпоратив","Форум / конференция","Другое"] },
+      { type:"text", key:"date", label:"Дата", opt:true, ph:"15 августа 2026" },
+      { type:"text", key:"city", label:"Город", opt:true },
+      { type:"text", key:"venue", label:"Площадка / место", opt:true, ph:"ресторан, лофт, зал…" },
+      { type:"text", key:"guests", label:"Сколько примерно гостей?", opt:true, ph:"40" }
+    ]},
+    { title:"Как с вами связаться", sub:"Чтобы Сергей мог обсудить детали.", fields:[
+      { type:"text", key:"name", label:"Как вас зовут?", required:true },
+      { type:"text", key:"contact", label:"Телефон или Telegram", required:true, ph:"+7… или @username" },
+      { type:"text", key:"socials", label:"Соцсети", opt:true, ph:"VK / Instagram (по желанию)" }
+    ]},
+    { title:"Формат и атмосфера", sub:"Чтобы вечер был именно вашим.", fields:[
+      { type:"chips", multi:true, key:"mood", label:"Какое настроение хотите?", opt:true, options:["Тёплое, семейное","Динамичное, драйв","Торжественное","Неформальное","Камерное","Масштабное"] },
+      { type:"textarea", key:"must", label:"Что точно должно быть?", opt:true },
+      { type:"textarea", key:"avoid", label:"Чего точно НЕ нужно?", opt:true }
+    ]},
+    { title:"Программа и слово гостям", sub:"Можно пропустить и дополнить позже.", fields:[
+      { type:"textarea", key:"keymoments", label:"Ключевые моменты / блоки программы", opt:true },
+      { type:"cards", key:"speakers", label:"Кому дать слово / тосты", opt:true, cols:["Имя","Кто это / факт"] }
+    ]},
+    { title:"Музыка", sub:"", fields:[
+      { type:"textarea", key:"music_key", label:"Важные композиции на ключевые моменты", opt:true },
+      { type:"textarea", key:"music_stop", label:"Стоп-лист — что НЕ играть", opt:true },
+      { type:"textarea", key:"music_dance", label:"Танцевальные предпочтения / жанры", opt:true }
+    ]},
+    { title:"Традиции", when:function(a){return a.eventType==="Свадьба";}, fields:[
+      { type:"chips", multi:true, key:"traditions", label:"Какие традиции оставляем?", opt:true, options:["Каравай","Семейный очаг","Танец с родителями","Букет невесты","Бутоньерка","Торт"] },
+      { type:"textarea", key:"love_story", label:"Пара слов о вашей истории", opt:true }
+    ]},
+    { title:"Детали события", when:function(a){return a.eventType && a.eventType!=="Свадьба";}, fields:[
+      { type:"textarea", key:"hero", label:"О ком/чём событие, кто виновник торжества?", opt:true },
+      { type:"textarea", key:"goal", label:"Цель и важные детали", opt:true },
+      { type:"chips", multi:true, key:"tech", label:"Что нужно технически?", opt:true, options:["Микрофоны","Экран / проектор","Награждение","Выступления спикеров","Живая музыка"] }
+    ]},
+    { title:"Почти готово", sub:"Последний шаг.", fields:[
+      { type:"textarea", key:"wishes", label:"Что ещё важно знать?", opt:true },
+      { type:"consent", key:"consent", label:"", required:true }
+    ]}
+  ];
+
+  var A = {};
+  try { A = JSON.parse(localStorage.getItem("bog_brief_draft")||"{}") || {}; } catch(e){ A = {}; }
+  var idx = 0;
+  var root = document.getElementById("bfroot");
+  var bar = document.getElementById("bfbar");
+
+  function visible(){ return STEPS.filter(function(s){ return !s.when || s.when(A); }); }
+  function save(){ try{ localStorage.setItem("bog_brief_draft", JSON.stringify(A)); }catch(e){} }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  function fieldHTML(f){
+    var req = f.required ? '<span class="bfreq"> *</span>' : (f.opt ? '<span class="opt">по желанию</span>' : '');
+    var lbl = f.label ? '<label class="bflbl">'+esc(f.label)+req+'</label>' : '';
+    var v = A[f.key];
+    if(f.type==="text") return '<div class="bffield">'+lbl+'<input class="bfi" data-k="'+f.key+'" type="text" value="'+esc(v||"")+'" placeholder="'+esc(f.ph||"")+'"></div>';
+    if(f.type==="textarea") return '<div class="bffield">'+lbl+'<textarea class="bft" data-k="'+f.key+'" placeholder="'+esc(f.ph||"")+'">'+esc(v||"")+'</textarea></div>';
+    if(f.type==="chips"){
+      var sel = f.multi ? (Array.isArray(v)?v:[]) : v;
+      var chips = f.options.map(function(o){
+        var on = f.multi ? (sel.indexOf(o)>=0) : (sel===o);
+        return '<button type="button" class="bfchip'+(on?" on":"")+'" data-chip="'+f.key+'" data-val="'+esc(o)+'" data-multi="'+(f.multi?1:0)+'">'+esc(o)+'</button>';
+      }).join("");
+      return '<div class="bffield">'+lbl+'<div class="bfchips">'+chips+'</div></div>';
+    }
+    if(f.type==="cards"){
+      var rows = (Array.isArray(v)?v:[]);
+      if(!rows.length) rows=[{}];
+      var html = rows.map(function(r,i){
+        return '<div class="bfcard" data-card="'+f.key+'" data-i="'+i+'">'+
+          f.cols.map(function(c,ci){ return '<input class="bfi" data-col="'+ci+'" type="text" placeholder="'+esc(c)+'" value="'+esc(r["c"+ci]||"")+'">'; }).join("")+
+          '<button type="button" class="del" data-delcard="'+f.key+'" data-i="'+i+'">×</button></div>';
+      }).join("");
+      return '<div class="bffield">'+lbl+'<div class="bfcards" data-cards="'+f.key+'">'+html+'</div><button type="button" class="bfadd" data-addcard="'+f.key+'">+ добавить</button></div>';
+    }
+    if(f.type==="consent"){
+      var on = !!v;
+      return '<div class="bffield"><label class="bfconsent"><input type="checkbox" data-k="consent"'+(on?" checked":"")+'><span>Я даю согласие на обработку персональных данных и принимаю <a href="privacy.html" target="_blank">политику конфиденциальности</a>.</span></label></div>';
+    }
+    return "";
+  }
+
+  function render(){
+    var steps = visible();
+    if(idx>=steps.length) idx=steps.length-1;
+    if(idx<0) idx=0;
+    var step = steps[idx];
+    bar.style.width = Math.round((idx)/(steps.length-1)*100)+"%";
+    var last = idx===steps.length-1;
+    root.innerHTML =
+      '<div class="bfhead"><div class="bfstepn">Шаг '+(idx+1)+' из '+steps.length+'</div>'+
+      '<h1 class="bftitle">'+esc(step.title)+'</h1>'+(step.sub?'<p class="bfsub">'+esc(step.sub)+'</p>':'')+'</div>'+
+      step.fields.map(fieldHTML).join("")+
+      '<p class="bferr" id="bferr"></p>'+
+      '<div class="bfnav">'+
+        (idx>0?'<button type="button" class="bfbtn" id="bfback">Назад</button>':'')+
+        '<button type="button" class="bfbtn bfbtn--main" id="bfnext">'+(last?"Отправить":"Далее →")+'</button>'+
+      '</div>'+
+      '<p class="bfsaved">черновик сохраняется автоматически</p>';
+    wire(step);
+  }
+
+  function wire(step){
+    root.querySelectorAll("[data-k]").forEach(function(el){
+      el.addEventListener(el.type==="checkbox"?"change":"input", function(){
+        A[el.getAttribute("data-k")] = el.type==="checkbox" ? el.checked : el.value;
+        save();
+      });
+    });
+    root.querySelectorAll("[data-chip]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var k=el.getAttribute("data-chip"), val=el.getAttribute("data-val"), multi=el.getAttribute("data-multi")==="1";
+        if(multi){ var arr=Array.isArray(A[k])?A[k]:[]; var i=arr.indexOf(val); if(i>=0)arr.splice(i,1); else arr.push(val); A[k]=arr; el.classList.toggle("on"); }
+        else { A[k]=val; root.querySelectorAll('[data-chip="'+k+'"]').forEach(function(c){c.classList.remove("on");}); el.classList.add("on"); }
+        save();
+      });
+    });
+    root.querySelectorAll("[data-card]").forEach(function(card){
+      card.querySelectorAll("[data-col]").forEach(function(inp){
+        inp.addEventListener("input", function(){ collectCards(card.getAttribute("data-card")); });
+      });
+    });
+    root.querySelectorAll("[data-addcard]").forEach(function(b){
+      b.addEventListener("click", function(){ var k=b.getAttribute("data-addcard"); var arr=Array.isArray(A[k])?A[k]:[]; arr.push({}); A[k]=arr; save(); render(); });
+    });
+    root.querySelectorAll("[data-delcard]").forEach(function(b){
+      b.addEventListener("click", function(){ var k=b.getAttribute("data-delcard"); collectCards(k); var arr=Array.isArray(A[k])?A[k]:[]; arr.splice(parseInt(b.getAttribute("data-i"),10),1); A[k]=arr; save(); render(); });
+    });
+    var back=document.getElementById("bfback"); if(back) back.addEventListener("click", function(){ idx--; render(); window.scrollTo(0,0); });
+    document.getElementById("bfnext").addEventListener("click", next);
+  }
+
+  function collectCards(k){
+    var arr=[];
+    root.querySelectorAll('[data-cards="'+k+'"] .bfcard').forEach(function(card){
+      var o={}; card.querySelectorAll("[data-col]").forEach(function(inp){ o["c"+inp.getAttribute("data-col")]=inp.value; });
+      arr.push(o);
+    });
+    A[k]=arr; save();
+  }
+
+  function next(){
+    var steps=visible(), step=steps[idx], err=document.getElementById("bferr");
+    for(var i=0;i<step.fields.length;i++){
+      var f=step.fields[i];
+      if(f.required){
+        if(f.type==="consent" && !A.consent){ err.textContent="Поставьте, пожалуйста, галочку согласия."; return; }
+        if(f.type!=="consent" && !(A[f.key]&&String(A[f.key]).trim())){ err.textContent="Заполните: "+(f.label||"обязательное поле"); return; }
+      }
+    }
+    err.textContent="";
+    if(idx<steps.length-1){ idx++; render(); window.scrollTo(0,0); }
+    else submit();
+  }
+
+  function fmtVal(v){
+    if(Array.isArray(v)){
+      if(v.length && typeof v[0]==="object"){ return v.map(function(o){return Object.keys(o).map(function(k){return o[k];}).filter(Boolean).join(" — ");}).filter(Boolean).join("\n"); }
+      return v.join(", ");
+    }
+    return v==null?"":String(v);
+  }
+
+  function submit(){
+    var btn=document.getElementById("bfnext"); btn.disabled=true; btn.textContent="Отправляю…";
+    var payload={ name:A.name||"", contact:A.contact||"", eventType:A.eventType||"", date:A.date||"", city:A.city||"", venue:A.venue||"", guests:A.guests||"", sections:[] };
+    visible().forEach(function(step){
+      var items=[];
+      step.fields.forEach(function(f){
+        if(META.indexOf(f.key)>=0 || f.type==="consent") return;
+        var val=fmtVal(A[f.key]).trim();
+        if(val) items.push({ q:f.label||f.key, a:val });
+      });
+      if(items.length) items.unshift; // noop
+      if(items.length) payload.sections.push({ title:step.title, items:items });
+    });
+    fetch("/api/brief",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) })
+      .then(function(r){ return r.ok?r.json():null; })
+      .then(function(d){
+        if(d&&d.success){ try{localStorage.removeItem("bog_brief_draft");}catch(e){} done(); }
+        else { btn.disabled=false; btn.textContent="Отправить"; document.getElementById("bferr").textContent="Не удалось отправить — проверьте имя/контакт и попробуйте снова."; }
+      })
+      .catch(function(){ btn.disabled=false; btn.textContent="Отправить"; document.getElementById("bferr").textContent="Ошибка сети — попробуйте ещё раз."; });
+  }
+
+  function done(){
+    bar.style.width="100%";
+    root.innerHTML='<div class="bfdone"><div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg></div>'+
+      '<h2>Анкета отправлена!</h2><p>Спасибо! Сергей получил вашу анкету и свяжется с вами, чтобы обсудить детали. Можно закрывать страницу.</p>'+
+      '<div style="margin-top:26px"><a class="bfbtn" href="index.html">← Вернуться на сайт</a></div></div>';
+    window.scrollTo(0,0);
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

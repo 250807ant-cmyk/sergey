@@ -497,9 +497,9 @@ body.page-detail{ background:#f4ede0; color:#1c1712; }
   overflow:hidden; pointer-events:none; }
 .b2{ position:absolute; aspect-ratio:3/4; overflow:hidden; border-radius:2px; box-shadow:0 30px 70px rgba(0,0,0,.4); }
 .b2 img{ width:100%; height:100%; object-fit:cover; filter:grayscale(.4) brightness(.78) contrast(1.05); }
-.b2--s{ width:clamp(115px,11vw,190px); }
-.b2--m{ width:clamp(140px,13.5vw,240px); }
-.b2--l{ width:clamp(165px,16vw,280px); }
+.b2--s{ width:clamp(145px,13vw,230px); }
+.b2--m{ width:clamp(180px,16.5vw,300px); }
+.b2--l{ width:clamp(215px,20vw,360px); }
 /* раскладка коллажа (по всей ширине, часть кадров заходит под текст) */
 .b2-p1{ left:3%;  top:4%;  }   /* левый, m */
 .b2-p2{ left:82%; top:9%;  }   /* правый, m (зеркало p1) */
@@ -523,8 +523,8 @@ body.page-detail{ background:#f4ede0; color:#1c1712; }
   .about-scroll{ min-height:185vh; }
   .about-scroll__media{ z-index:1; }
   .about-scroll__sticky{ z-index:2; }
-  .b2--s{ width:24vw; } .b2--m{ width:30vw; } .b2--l{ width:36vw; }
-  .about-scroll .b2{ opacity:.6; }
+  .b2--s{ width:31vw; } .b2--m{ width:38vw; } .b2--l{ width:45vw; }
+  .about-scroll .b2{ opacity:.72; }
   .b2-p1{ left:-4%; top:4%;  }
   .b2-p2{ left:70%; top:10%; }
   .b2-p4{ left:-5%; top:43%; }
@@ -833,6 +833,70 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
   font-size:var(--step--1); color:#f3f1ec;
 }
 
+/* ===================================================================
+   ПРАВОВОЙ БЛОК — общие элементы на всех страницах
+   (чекбокс согласия в форме · cookie-баннер · юр-ссылки в футере)
+   =================================================================== */
+
+/* — согласие на обработку ПД внутри формы заявки (тёмная секция .req) — */
+.req__consent{
+  display:flex; align-items:flex-start; gap:.7em; cursor:pointer;
+  font-family:var(--f-mono); font-size:var(--step--2); line-height:1.55;
+  color:rgba(247,240,234,.62); letter-spacing:.01em; margin-top:.2em;
+}
+.req__consent input{
+  appearance:none; -webkit-appearance:none; flex:0 0 auto;
+  width:1.15em; height:1.15em; margin-top:.12em; border-radius:5px;
+  border:1px solid rgba(247,240,234,.4); background:rgba(255,255,255,.06);
+  display:grid; place-items:center; transition:border-color .25s, background .25s; cursor:pointer;
+}
+.req__consent input::after{
+  content:""; width:.5em; height:.28em; margin-top:-.08em;
+  border-left:2px solid #3a1208; border-bottom:2px solid #3a1208;
+  transform:rotate(-45deg) scale(0); transition:transform .2s var(--ease);
+}
+.req__consent input:checked{ background:var(--accent-2); border-color:var(--accent-2); }
+.req__consent input:checked::after{ transform:rotate(-45deg) scale(1); }
+.req__consent input:focus-visible{ outline:2px solid var(--accent-2); outline-offset:2px; }
+.req__consent a{ color:rgba(247,240,234,.9); border-bottom:1px solid var(--accent-2); transition:color .25s; }
+.req__consent a:hover{ color:var(--accent-2); }
+.req__consent--err{ color:#ffd1cb; }
+.req__consent--err input{ border-color:#ff8d80; }
+
+/* — юр-ссылки в подвале — */
+.footer__legal{
+  display:flex; flex-wrap:wrap; gap:.5em 1.4em; align-items:center;
+  margin-top:clamp(20px,2.6vw,32px); padding-top:clamp(18px,2.4vw,28px);
+  border-top:1px solid var(--line);
+  font-family:var(--f-mono); font-size:var(--step--2); letter-spacing:.04em;
+}
+.footer__legal a{ color:var(--paper-dim); transition:color .3s; }
+.footer__legal a:hover{ color:var(--accent-2); }
+
+/* — cookie-баннер (инжектится из JS, тёмный, на любой теме) — */
+.ckbar{
+  position:fixed; left:clamp(14px,3vw,28px); right:clamp(14px,3vw,28px); bottom:clamp(14px,3vw,28px);
+  z-index:8000; max-width:560px; margin-inline:auto;
+  background:#0c0c0e; color:#f3f1ec; border:1px solid rgba(243,241,236,.14);
+  border-radius:16px; padding:clamp(18px,2.4vw,26px);
+  display:flex; flex-direction:column; gap:.9em;
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  transform:translateY(140%); opacity:0; transition:transform .55s var(--ease), opacity .4s ease;
+}
+.ckbar.is-in{ transform:none; opacity:1; }
+.ckbar__text{ font-family:var(--f-mono); font-size:var(--step--1); line-height:1.6; color:rgba(243,241,236,.82); }
+.ckbar__text a{ color:#fff; border-bottom:1px solid var(--accent-2); }
+.ckbar__text a:hover{ color:var(--accent-2); }
+.ckbar__row{ display:flex; flex-wrap:wrap; gap:.6em; }
+.ckbar__btn{
+  font-family:var(--f-mono); font-weight:600; font-size:var(--step--1); letter-spacing:.02em;
+  border-radius:999px; padding:.7em 1.4em; cursor:pointer; transition:transform .25s, background .25s, color .25s;
+}
+.ckbar__btn--ok{ background:var(--accent-2); color:#3a1208; border:1px solid var(--accent-2); }
+.ckbar__btn--ok:hover{ transform:translateY(-2px); }
+.ckbar__btn--ghost{ background:transparent; color:rgba(243,241,236,.78); border:1px solid rgba(243,241,236,.28); }
+.ckbar__btn--ghost:hover{ color:#fff; border-color:#fff; }
+
 /* mobile: бренд + плашка стекаются по центру (отказываемся от абсолютного позиционирования) */
 @media (max-width:760px){
   .hero__top{ font-size:.8rem; max-width:18ch; top:clamp(80px,11vh,110px); }
@@ -854,4 +918,80 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
   .hero__reel-text{ font-size:.78rem; }
   .hero__reel-tag{ font-size:.55rem; }
 }
+
+/* ===================================================================
+   ЧАТ-ВИДЖЕТ (бот + оператор). Инжектится из JS, есть на всех страницах.
+   =================================================================== */
+.chatw{ position:fixed; right:clamp(14px,3vw,28px); bottom:clamp(14px,3vw,28px); z-index:8500;
+  font-family:var(--f-body); }
+.chatw__btn{ position:relative; width:58px; height:58px; border-radius:50%;
+  background:#e0a31f; color:#3a1208; border:none; cursor:pointer; font-size:24px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35); display:grid; place-items:center; transition:transform .2s; }
+.chatw__btn:hover{ transform:translateY(-2px); }
+.chatw__btn .dot{ position:absolute; top:-1px; right:-1px; width:14px; height:14px; border-radius:50%;
+  background:#d23a40; border:2px solid #0a0a0b; display:none; }
+.chatw.has-unread .chatw__btn .dot{ display:block; }
+.chatw__panel{ position:absolute; right:0; bottom:72px; width:min(92vw,360px); height:min(70vh,520px);
+  background:#0e0e10; border:1px solid rgba(244,242,236,.16); border-radius:16px;
+  display:flex; flex-direction:column; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.5);
+  animation:chatw-in .28s cubic-bezier(.2,.8,.2,1) both; }
+.chatw__panel[hidden]{ display:none; }
+@keyframes chatw-in{ from{ opacity:0; transform:translateY(14px) scale(.98); } to{ opacity:1; transform:none; } }
+.chatw__head{ display:flex; align-items:center; justify-content:space-between; padding:14px 16px;
+  background:#16161a; border-bottom:1px solid rgba(244,242,236,.12); color:#f1efe9; font-weight:600; font-size:15px; }
+.chatw__close{ background:none; border:none; color:#9a978f; font-size:24px; cursor:pointer; line-height:1; padding:0 2px; }
+.chatw__close:hover{ color:#f1efe9; }
+.chatw__msgs{ flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:8px; }
+.chatw__m{ max-width:82%; padding:9px 12px; border-radius:13px; font-size:14px; line-height:1.45;
+  white-space:pre-wrap; word-break:break-word; }
+.chatw__m--in{ align-self:flex-start; background:#1d1d22; color:#f1efe9; border-bottom-left-radius:5px; }
+.chatw__m--out{ align-self:flex-end; background:#e0a31f; color:#3a1208; border-bottom-right-radius:5px; }
+.chatw__form{ display:flex; gap:8px; padding:12px; border-top:1px solid rgba(244,242,236,.12); background:#16161a; }
+.chatw__input{ flex:1; background:#0e0e10; border:1px solid rgba(244,242,236,.2); color:#f1efe9;
+  border-radius:10px; padding:10px 12px; font:inherit; font-size:14px; }
+.chatw__input:focus{ outline:none; border-color:#e0a31f; }
+.chatw__send{ background:#e0a31f; color:#3a1208; border:none; border-radius:10px; width:44px; cursor:pointer; font-size:17px; }
+.chatw__send:hover{ filter:brightness(1.05); }
+
+/* кнопка перехода на подробную анкету (в секции заявки) */
+.req__anketa{ display:inline-flex; align-items:center; gap:.5em; margin-top:clamp(18px,2.6vw,30px);
+  font-family:var(--f-mono); font-size:var(--step--1); letter-spacing:.04em; color:#fff;
+  border:1.5px solid var(--accent-2); border-radius:999px; padding:.9em 1.5em; transition:background .25s, color .25s; }
+.req__anketa:hover{ background:var(--accent-2); color:#3a1208; }
+
+/* ============================================================
+   Доработки (v71): CTA в навигации · телефон-первая заявка ·
+   длиннее фото мероприятий · анти-копирование
+   ============================================================ */
+
+/* CTA «Оставить заявку» в навигации */
+.nav__cta{ font-family:var(--f-mono); font-size:var(--step--1); font-weight:600; letter-spacing:.02em;
+  padding:.7em 1.25em; border-radius:999px; background:var(--accent); color:#fff; white-space:nowrap;
+  transition:transform .25s var(--ease), filter .2s; }
+.nav__cta:hover{ filter:brightness(1.08); }
+@media (max-width:900px){ .nav__cta{ display:none; } } /* на мобиле — в бургер-меню */
+
+/* CTA в мобильном меню */
+.menu__cta{ color:var(--accent) !important; }
+.menu__cta small{ color:var(--accent); }
+
+/* «Событие» — выбор чипами, чтобы меньше печатать */
+.req__chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.req__chip{ font-family:var(--f-mono); font-size:var(--step--1); cursor:pointer; padding:.6em 1.15em;
+  border-radius:999px; border:1.5px solid rgba(255,255,255,.3); background:transparent; color:inherit;
+  opacity:.85; transition:.18s; }
+.req__chip:hover{ border-color:#fff; opacity:1; }
+.req__chip.is-on{ background:#fff; color:var(--accent); border-color:#fff; opacity:1; }
+
+/* телефон — моноширинный для читабельности маски */
+.req__field--phone input{ font-family:var(--f-mono); letter-spacing:.02em; }
+
+/* фото мероприятий на главной — крупнее и ГОРИЗОНТАЛЬНЫЕ */
+.story__thumb{ aspect-ratio:16/9; }
+@media (min-width:1025px){ .story{ grid-template-columns:auto minmax(0,1.4fr) clamp(220px,22vw,360px) auto; } }
+
+/* анти-копирование: запрет выделения/перетаскивания (поля ввода — можно) */
+html.protect, html.protect *{ -webkit-user-select:none; -moz-user-select:none; user-select:none; -webkit-touch-callout:none; }
+html.protect input, html.protect textarea{ -webkit-user-select:text; -moz-user-select:text; user-select:text; }
+html.protect img{ -webkit-user-drag:none; user-drag:none; }
 
