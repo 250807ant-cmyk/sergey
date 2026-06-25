@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/studio.css?v=71" />
+<link rel="stylesheet" href="css/studio.css?v=72" />
 <link rel="stylesheet" href="css/anim.css?v=3" />
 </head>
 <body>
@@ -190,6 +190,20 @@
   </div>
 </section>
 
+<!-- ЖУРНАЛ (подгружается из /api/blog; скрыт, если статей нет) -->
+<section class="section journal" id="journal" hidden>
+  <div class="wrap">
+    <div class="journal__head">
+      <div>
+        <p class="journal__eyebrow">журнал</p>
+        <h2 class="journal__title">Свежее из журнала</h2>
+      </div>
+      <a class="journal__all" href="/blog">Все статьи <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H9M17 7v8"/></svg></a>
+    </div>
+    <div class="journal__grid" data-journal></div>
+  </div>
+</section>
+
 <!-- ОСТАВИТЬ ЗАЯВКУ -->
 <section class="req" id="contact">
   <div class="wrap req__grid">
@@ -228,6 +242,7 @@
         <span class="footer__role">ведущий · спикер · модератор</span>
       </div>
       <nav class="footer__social" aria-label="Соцсети">
+        <a href="/blog">Журнал</a>
         <a href="https://instagram.com/">Instagram*</a>
         <a href="#">YouTube</a>
         <a href="#">VK</a>
@@ -251,7 +266,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="js/studio.js?v=47" defer></script>
+<script src="js/studio.js?v=48" defer></script>
 <script src="js/anim.js?v=3" defer></script>
 </body>
 </html>

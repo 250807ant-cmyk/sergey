@@ -467,6 +467,28 @@
       .then(function () { cases(); });
   }
 
+  /* ---- журнал на главной (последние статьи из /api/blog) ---- */
+  function journal() {
+    var sec = document.querySelector(".journal"), grid = sec && sec.querySelector("[data-journal]");
+    if (!grid) return;
+    var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); };
+    fetch("/api/blog?limit=3", { headers: { Accept: "application/json" } })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (items) {
+        if (!items || !items.length) return;
+        grid.innerHTML = items.map(function (a) {
+          var cover = a.cover ? '<div class="jcard__cover"><img src="' + esc(a.cover) + '" alt="" loading="lazy"></div>' : "";
+          return '<a class="jcard" href="' + esc(a.url) + '">' + cover +
+            '<div class="jcard__b"><span class="jcard__date">' + esc(a.date) + '</span>' +
+            '<h3 class="jcard__title">' + esc(a.title) + '</h3>' +
+            (a.excerpt ? '<p class="jcard__exc">' + esc(a.excerpt) + '</p>' : '') +
+            '<span class="jcard__more">Читать →</span></div></a>';
+        }).join("");
+        sec.removeAttribute("hidden");
+      })
+      .catch(function () {});
+  }
+
   /* ---- чат-виджет: бот + оператор (ответы из админки) ---- */
   function chatWidget() {
     if (document.querySelector(".chatw")) return;
@@ -605,6 +627,6 @@
     });
   }
 
-  function boot() { colourise(); heroInteract(); nav(); menu(); cursor(); theme(); formSubmit(); phoneForm(); siteCases(); year(); cookieBanner(); siteImages(); chatWidget(); antiCopy(); }
+  function boot() { colourise(); heroInteract(); nav(); menu(); cursor(); theme(); formSubmit(); phoneForm(); siteCases(); journal(); year(); cookieBanner(); siteImages(); chatWidget(); antiCopy(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();
